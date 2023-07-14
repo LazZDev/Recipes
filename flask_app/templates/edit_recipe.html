@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Document metadata -->
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- Document title -->
+        <title>Edit Recipe</title>
+        <!-- External CSS stylesheet -->
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossorigin="anonymous"
+        />
+    </head>
+    <body>
+        <!-- Navigation bar -->
+        <nav class="d-flex justify-content-between align-items-center col-12">
+            <!-- Welcome message -->
+            <h1 class="text-center">Welcome {{user.first_name}}!</h1>
+            <!-- Buttons -->
+            <div class="d-flex col-4 justify-content-around">
+                <a href="/dashboard" class="btn btn-primary">Dashboard</a>
+                <a href="/logout" class="btn btn-info">Logout</a>
+            </div>
+        </nav>
+        <!-- Edit recipe form -->
+        <form
+            action="/update/recipe"
+            method="post"
+            class="col-12 p-4 my-4 bg-dark text-light"
+        >
+            <!-- Hidden input field for recipe ID -->
+            <input type="hidden" name="id" value="{{edit.id}}" />
+            <!-- Recipe title -->
+            <h2 class="text-primary">{{edit.name}}</h2>
+            <!-- Flash messages for recipe-related errors -->
+            {% with messages = get_flashed_messages(category_filter=['recipe'])
+            %} {% if messages %} {% for message in messages %}
+            <!-- Display flash messages -->
+            <p>{{message}}</p>
+            {% endfor %} {% endif %} {% endwith %}
+            <div class="d-flex justify-content-between col-10">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <!-- Input field for recipe name -->
+                        <input
+                            type="text"
+                            name="name"
+                            class="form-control"
+                            value="{{edit.name}}"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <!-- Textarea for recipe description -->
+                        <textarea
+                            name="description"
+                            cols="30"
+                            rows="5"
+                            class="form-control"
+                        >
+                            {{edit.description}}
+                        </textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="instructions">Instructions</label>
+                        <!-- Textarea for recipe instructions -->
+                        <textarea
+                            name="instructions"
+                            cols="30"
+                            rows="5"
+                            class="form-control"
+                        >
+                            {{edit.instructions}}
+                        </textarea>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <label for="date_made">Date Cooked/Made:</label>
+                        <!-- Input field for date the recipe was made -->
+                        <input
+                            type="date"
+                            name="date_made"
+                            value="{{edit.date_made.strftime('%Y-%m-%d') if edit.date_made else ''}}"
+                            class="form-control"
+                        />
+                    </div>
+                    <label for="under30">Under 30 Mins?</label>
+                    <div class="input-group-text bg-dark">
+                        <input
+                            type="radio"
+                            name="under30"
+                            value="0"
+                            class="form-control"
+                        />
+                        <label for="0" class="text-warning">No</label>
+                    </div>
+                    <div class="input-group-text bg-dark">
+                        <input
+                            type="radio"
+                            name="under30"
+                            value="1"
+                            class="form-control"
+                        />
+                        <label for="1" class="text-warning">Yes</label>
+                    </div>
+                    <br />
+                    <!-- Submit button -->
+                    <input
+                        type="submit"
+                        value="Submit"
+                        class="btn btn-primary"
+                    />
+                </div>
+            </div>
+        </form>
+    </body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Document metadata -->
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- Document title -->
+        <title>Recipe</title>
+        <!-- External CSS stylesheet -->
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossorigin="anonymous"
+        />
+    </head>
+    <body>
+        <!-- Navigation bar -->
+        <nav class="d-flex justify-content-between align-items-center col-12">
+            <!-- Welcome message -->
+            <h1 class="text-center">Welcome {{user.first_name}}!</h1>
+            <!-- Buttons -->
+            <div class="d-flex col-4 justify-content-around">
+                <a href="/dashboard" class="btn btn-primary">Dashboard</a>
+                <a href="/logout" class="btn btn-info">Logout</a>
+            </div>
+        </nav>
+        <!-- Recipe card container -->
+        <div class="card col-12 mx-auto my-5 bg-dark text-light">
+            <div class="card-body">
+                <!-- Recipe title -->
+                <h2 class="card-title text-primary">{{recipe.name}}</h2>
+                <!-- Recipe description -->
+                <p class="card-text">Description: {{recipe.description}}</p>
+                <!-- Indicator if recipe can be prepared in under 30 minutes -->
+                <p class="card-text">
+                    Under 30 Minutes: {% if recipe.under30 == 1 %}Yes{% else
+                    %}No{% endif %}
+                </p>
+                <!-- Recipe instructions -->
+                <p class="card-text">Instructions: {{recipe.instructions}}</p>
+                <!-- Date the recipe was made -->
+                <p class="card-text">
+                    Made On: {{recipe.date_made.strftime("%Y-%m-%d")}}
+                </p>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Document metadata -->
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- Document title -->
+        <title>Welcome</title>
+        <!-- External CSS stylesheet -->
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossorigin="anonymous"
+        />
+    </head>
+    <body>
+        <!-- Navigation bar -->
+        <nav class="d-flex justify-content-between align-items-center col-12">
+            <!-- Welcome message -->
+            <h1 class="text-center">Welcome {{ user.first_name }}!</h1>
+            <!-- Buttons -->
+            <div class="d-flex col-4 justify-content-around">
+                <a href="/new/recipe" class="btn btn-primary">Create Recipe</a>
+                <a href="/logout" class="btn btn-info">Logout</a>
+            </div>
+        </nav>
+        <!-- Recipe table container -->
+        <div class="col-12 mx-auto">
+            <!-- Recipe table -->
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Under 30 Mins?</th>
+                        <th>Posted By</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Loop through each recipe -->
+                    {% for recipe in all_recipes %}
+                    <tr>
+                        <!-- Recipe name -->
+                        <td>{{ recipe.name }}</td>
+                        <!-- Check if recipe can be prepared in under 30 minutes -->
+                        {% if recipe.under30 == 1 %}
+                        <td>Yes</td>
+                        {% else %}
+                        <td>No</td>
+                        {% endif %}
+                        <!-- Name of the user who posted the recipe -->
+                        <td>{{ recipe.user.first_name }}</td>
+                        <td>
+                            <!-- Link to view recipe instructions -->
+                            <a
+                                class="btn btn-info"
+                                href="/recipe/{{ recipe.id }}"
+                                >View Instructions</a
+                            >
+                            <!-- Check if the current user is the owner of the recipe -->
+                            {% if recipe.user_id == session.user_id %}
+                            <!-- Links for editing and deleting the recipe -->
+                            <a
+                                class="btn btn-primary"
+                                href="/edit/recipe/{{ recipe.id }}"
+                                >Edit</a
+                            >
+                            <a
+                                class="btn btn-danger"
+                                href="/destroy/recipe/{{ recipe.id }}"
+                                >Delete</a
+                            >
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
